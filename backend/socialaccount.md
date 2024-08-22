@@ -114,3 +114,7 @@ print('after password:', u.password)
 If you set password with set_unusable_password(), 
 Login is impossible with password, possible only with OAuth.
 u.set_unusable_password() is different with Blank or None value.
+
+### Conclusion
+I don't think I have to delete 'password' from table for security.
+Since 'u.set_unusable_password()' is called, the password stored in the database becomes unusable for authentication. It is replaced with a special value that signals to Django's authentication backend that the user cannot log in using a password.
