@@ -96,7 +96,7 @@ MIDDLEWARE = [
 4) Then you'll see below 
 response content_length is  9357
 
-plus. I noticed the number of execute log, 
+### plus. I noticed the number of execute log, 
 The log was '[30/Aug/2024 11:12:16] "GET /api/photos/2/ HTTP/1.1" 200 9357'
 There were same number the end of the log.
 
