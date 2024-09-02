@@ -5,7 +5,7 @@ def post(self, request, *args, **kwargs):
     print(self.__dict__ )
 ```
 
-```json
+```JSON
 {
   'head': <boundmethodPhotoDetailView.getof<photos.views.PhotoDetailViewobjectat0x109204760>>,
   'request': <rest_framework.request.Request: POST'/api/photos/2/'>,
@@ -48,7 +48,7 @@ def post(self, request, *args, **kwargs):
 - Enables dynamic parameter handling and enhances method flexibility.
 - For example, if you have a URL pattern that includes a parameter like '<int:photo_id>' this value would be passed in **kwargs.
 
-### *args AND **kwargs
+### *args VS **kwargs
 *args is
 - tuple type (value , )
 - Non-Keyword Arguments
