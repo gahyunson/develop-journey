@@ -39,3 +39,4 @@ Change it to AllowAny.
 class CartView(APIView):
     permission_classes = [AllowAny]
 ```
+
