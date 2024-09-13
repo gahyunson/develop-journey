@@ -1,8 +1,26 @@
+# Model
 Making queries
 - Django automatically gives you a database-abstraction API
 - A model class = A DB table
 - If you need to add extra Manager method or to modify the initial QuerySet the Manager returns -> customize a Manager
 
+Override Primary key 
+- Add below code into a mode argument.
+`primary_key=True`
+
+- Be careful not to choose field names that conflict with the models API (clean, save, or delete).
+
+ blank
+- blank is filtered at validation step.
+
+verbose_name
+- the first positional argument (except for ForeignKey, ManyToManyField, OneToOneField)
+`first_name = models.CharField("Person's first name", ...)`
+- if ForeignKey, ManyToManyField, OneToOneField, use the keyword.
+`models.ForeignKey(..., verbose_name="related place")`
+
+
+### Manager
 Default managers
 - use default manager or base_manager if you handle an unknown model(in a third-party app)
 
@@ -30,3 +48,5 @@ With this model, `Photo.cart_objects.all()` will only return `.filter(user='gahy
 Accessing related objects
 - Django uses an instance of the Model._base_manager (not the _default_manager)
 - or Meta.bas_manager_name
+
+

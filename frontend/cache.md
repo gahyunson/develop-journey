@@ -1,3 +1,9 @@
+Cookie = Session Cookie + Persistent cookie
+
+When is a cookie destroyed? 
+    Session Cookie: Close the brower or site.
+    Persistent Cookie: It can be destoryed based on the parameters Expires or Max-Age, which are set by the server.
+
 # Cache Flow
 You can see the flow of a cache mechanism in the diagram below.
 I simply described how cache works.
