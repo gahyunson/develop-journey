@@ -51,9 +51,6 @@ Before Django connect to databse ... set in settings.py
 
 ### Database configuration with Django
 
-
-
-
 "wait for db" Fixing database race condition.
 (Django is ready but DB isn't ready)
 - Check for database availability
