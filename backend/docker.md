@@ -21,15 +21,15 @@ Everything was great but I confronted a path problem. So I'm going to explore Do
 2. Paste the token code in secrets of github repository
 
 ## docker-compose.yml
-version: the version of docker compose syntax that we're going to be using.   
-services: main block. - docker-compose file is typically consist of one or more services as need it for my application.   
-app: name about service, run on docker file.   
-build:   
-  context: root (current directory) -> 이 부분 다시 들어봐야 함   
+version: the version of docker compose syntax that we're going to be using.
+services: main block. - docker-compose file is typically consist of one or more services as need it for my application.
+app: name about service, run on docker file.
+build:
+  context: root (current directory) -> 이 부분 다시 들어봐야 함
   args:
-ports:   
-volumes: mapping directly from our system into the docker container, automatically sink the code and our project to the running container.  
-command: 
+ports:
+volumes: mapping directly from our system into the docker container, automatically sink the code and our project to the running container.
+command:
 
 Linting: check code formatting
     install flake8
@@ -47,7 +47,7 @@ Before Django connect to databse ... set in settings.py
 - Port (default:5432)
 - Database Name
 - Username (in order to authentication)
-- Password 
+- Password
 
 ### Database configuration with Django
 
@@ -58,7 +58,7 @@ Before Django connect to databse ... set in settings.py
 -> Create custom Django manage command
 
 
-```
+```python
 from unittest.mock import patch
 
 from psycopg2 import OperationalError as Psycopg2Error
@@ -66,12 +66,11 @@ from psycopg2 import OperationalError as Psycopg2Error
 from django.core.management import call_command
 from django.db.utils import OperationalError
 from django.test import SimpleTestCase # unit test
-
-@patch('core.management.commands.wait_for_db.Command.check') 
+@patch('core.management.commands.wait_for_db.Command.check')
 class CommandTests(SimpleTestCase):
     """Test commands."""
 
     def test_wait_for_db_read(self, patched_check):
         """Test waiting for database if database ready."""
-        patched_check.return_value = True 
+        patched_check.return_value = True
 ```

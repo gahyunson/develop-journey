@@ -65,8 +65,12 @@ Add `proxy = True` attribute of the Meta class.
 
 
 ### Manager
+Manage of the objects(Model) system.
 Default managers
 - use default manager or base_manager if you handle an unknown model(in a third-party app)
+- Custom logic for creating objects
+    - e.g. Hash password
+- Add methods that are used by Django command line interface(CLI)
 
 
 Custom Manager
