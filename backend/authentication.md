@@ -47,3 +47,18 @@ Why no logout API?
     - Disconnect off the internet.
 - Not usefule on API
 
+```python
+from django.contrib.auth import authenticate
+```
+It allows to authenticate with the authentication system.
+It can be used like below.
+```python
+email = attrs.get('email')
+password = attrs.get('password')
+user = authenticate(
+    request=self.context.get('request'),
+    username=email,
+    password=password,
+)
+```
+

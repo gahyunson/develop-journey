@@ -4,7 +4,7 @@
 - A model class = A DB table
 - If you need to add extra Manager method or to modify the initial QuerySet the Manager returns -> customize a Manager
 
-### Override Primary key 
+### Override Primary key
 - Add below code into a mode argument.
 `primary_key=True`
 
@@ -19,9 +19,12 @@
 - if ForeignKey, ManyToManyField, OneToOneField, use the keyword.
 `models.ForeignKey(..., verbose_name="related place")`
 
-### Multi-table inheritance
+### Integer? Decimal?
+Integer is recommanded. When you have decimals and floats, It can mess up the calculations.
+So If you don't need to calculate, it will be okay to use decimal.
 
-For example, 
+### Multi-table inheritance
+For example,
 ```python
 from django.db import models
 
