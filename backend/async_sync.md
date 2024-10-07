@@ -5,9 +5,9 @@
 # ASGI before WSGI
 WSGI is for synchronous code.
 
-Do not freely mix synchronous and asynchronous code. 
+Do not freely mix synchronous and asynchronous code.
 Because synchronous code can block an event loop in asynchronous code.
-you can't simply write an asynchronous callable and plug it in. 
+you can't simply write an asynchronous callable and plug it in.
 
 So ASGI was born. It is a new standard similar to WSGI.
 And ASGI is for asynchronous code.
@@ -27,7 +27,7 @@ Performance
 - The ASGI performance is much more stable even after failures.
 - tool: Docker includes Nginx and Postgresql, Locust
 
-Channels 
+Channels
 - support asynchronous protocols.
 - asynchronous protocols: Websockets, long polling HTTP
 - a official Django project

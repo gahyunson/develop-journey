@@ -21,3 +21,9 @@ renderer_classes = api_settings.DEFAULT_RENDERER_CLASSES
 - Map to Django models.
 - Router: allow to automatically generate URLs. You don't need to specifically define the structure for the urls.
 - Great for CRUD operations on models.
+
+- the serializer of the parameter is the data already was validated.
+    ```python
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+    ```

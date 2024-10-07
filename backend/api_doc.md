@@ -1,12 +1,14 @@
 Enable to documentation with `drf-spectacular`
 
 1. requirements.txt
+
 Install drf-spectacular to the project.
 ```
 drf-spectacular>=0.15.1,<0.16
 ```
 
 2. settings.py
+
 Set up the configuration.
 ```python
 INSTALLED_APPS = [
@@ -20,6 +22,7 @@ REST_FRAMEWORK = {
 ```
 
 3. project/urls.py
+
 Serve a documentation through the Django project.
 
 ```python

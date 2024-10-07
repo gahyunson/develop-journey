@@ -1,11 +1,11 @@
-# I want to know the values of the parameters!
-These are automatically provided by Django 
+## I want to know the values of the parameters!
+These are automatically provided by Django
 ```python
 def post(self, request, *args, **kwargs):
     print(self.__dict__ )
 ```
 
-```JSON
+```json
 {
   'head': <boundmethodPhotoDetailView.getof<photos.views.PhotoDetailViewobjectat0x109204760>>,
   'request': <rest_framework.request.Request: POST'/api/photos/2/'>,
@@ -32,7 +32,7 @@ def post(self, request, *args, **kwargs):
 - Contains data such as headers, body, method, and user authentication details.
 - Crucial for accessing and processing client-submitted data.
 
-    It is automatically provided Parser by Django.   
+    It is automatically provided Parser by Django.
     You can use it when you need forms JSON, XML, HTML etc. in RESTful API.
 
     'request.data' allows you to access the body of the request in a structured format without needing to manually parse it.
@@ -46,15 +46,15 @@ def post(self, request, *args, **kwargs):
 - Captures additional keyword arguments as a dictionary.
 - Often contains URL parameters in Django views.
 - Enables dynamic parameter handling and enhances method flexibility.
-- For example, if you have a URL pattern that includes a parameter like '<int:photo_id>' this value would be passed in **kwargs.
+- For example, if you have a URL pattern that includes a parameter like `<int:photo_id>` this value would be passed in **kwargs.
 
 ### *args VS **kwargs
-*args is
+`*args` is
 - tuple type (value , )
 - Non-Keyword Arguments
 - pass a variable number of arguments to a function
 
-**kwargs is
+`**kwargs` is
 - dictionary type {key: value}
 - Keyword Argument
 
