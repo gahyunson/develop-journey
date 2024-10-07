@@ -1,3 +1,15 @@
+# Tests
+1. Public tests (Unauthenticated requests)
+    - e.g. registering a new user
+2. Private tests (Anthenticated requests)
+
+
+### full URL path
+`from django.urls import reverse`
+`reverse('user:create')`: URL endpoint of the API.
+It returns full URL path.
+
+
 ### helper function
 We can use some helper function in tests.py.
 For example,
@@ -19,6 +31,24 @@ def test_update(self):
     )
 ```
 
+### Create API and testing
+```python
+from rest_framework.test import APIClient
+
+class PublicApiTests(TestCase):
+    def setUp(self):
+        self.client = APIClient()
+
+    def test_create_user_success(self):
+        """Test creating a user is successful."""
+        payload = {
+            'email': 'test@example.com',
+            'password': 'testpass123',
+            'name': 'Test Name',
+        }
+        res = self.client.post(CREATE_USER_URL, payload)
+```
+
 ### API method
 Particial update.
 ```python
@@ -33,3 +63,6 @@ It will refresth from DB.
 ```python
 recipe.refresh_from_db()
 ```
+
+### Check the values
+`self.assertIn('token', res.data)`: To check the res data includes a token.
