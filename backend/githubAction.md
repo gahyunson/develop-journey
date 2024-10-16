@@ -16,7 +16,7 @@ common uses for github actions
 
 1. Create folder on root directory. /.github/workflow/
 2. Create file in workflow /.github/workflow/checks.yml
-    ```yaml
+    ```yml
     name: the name will appear in github action.
     on: Trigger. any pushed our project, run the jobs.
 

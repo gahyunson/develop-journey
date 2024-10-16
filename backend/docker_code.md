@@ -27,7 +27,7 @@
             --no-create-home \
             django-user
 
-    ENV PATH='/py/bin:$PATH'
+    ENV PATH="/py/bin:$PATH"
 
     USER django-user
     ```
@@ -45,7 +45,10 @@
         command: >
             sh -c "python manage.py runserver 0.0.0.0:8000"
     ```
-- flake8 install
+- flake8 install - requirements.dev.txt
+    ```
+    flake8>=3.9.2,<3.10
+    ```
 - Add code to Dockerfile
     ```
     RUN ...
@@ -160,7 +163,7 @@
 
             call_command('wait_for_db')
 
-            patched_check.assert_called_once_with(database=['default'])
+            patched_check.assert_called_once_with(databases=['default'])
 
         def test_wait_for_db_delay(self, patched_check):
             """Test waiting for database when getting OperationalError."""
@@ -170,7 +173,7 @@
             call_command('wait_for_db')
 
             self.assertEqual(patched_check.call_count, 6)
-            patched_check.assert_called_with(datbase=['default'])
+            patched_check.assert_called_with(datbases=['default'])
     ```
     `patch`: mocking
     `patched_check`: customize the behavior.
