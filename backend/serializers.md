@@ -67,14 +67,14 @@ We want to take all of the values that are passed into the tag.
 
 ## Design
 ### Seperate serializers
-We don't need to define all things into one serializer.
-Let's create a separate serializers! Then, why we create a separate serializers?
-It is because when we upload somethings we don't need any other values that we're not going to upload.
+We don't need to define all things in a single serializer.
+Let's create separate serializers! Then, why we creating a separate serializers is better?
+It is because when we upload data, we don't need any other values that aren't relevant to the upload process.
 We separate APIs and the best practice is to only upload one type of data to an API.
-Here is examples.
 
-I'm making 'Photos' Model. Its features are id, title, description and date.
-I want to add a image feature.
+Here is examples.
+I'm creating a 'Photos' Model with features such as id, title, description and date.
+Now, I want to add an image feature.
 
 ```python
 class PhotoSerializer(serializers.ModelSerializer):
@@ -89,4 +89,4 @@ class PhotoImageSerializer(serializers.ModelSerializer):
         read_only_fields = ['id']
         extra_kwargs = {'image': {'required': True}}
 ```
-We set the model to Photo and add 'image' field. It's going to be more efficiently manage uploading data.
+We set the model to Photo and add the 'image' field. It's going to be more efficiently manage uploading data.
