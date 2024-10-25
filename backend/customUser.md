@@ -1,6 +1,6 @@
 # Custom User model
-You can override the default *user model* by using AbstractUser.   
-Simply import `AbstractUser`:   
+You can override the default *user model* by using AbstractUser.
+Simply import `AbstractUser`:
 
 ```python
 from django.contrib.auth.models import AbstractUser
@@ -17,8 +17,15 @@ class Meta:
         extra_kwargs = {'password': {'write_only': True}}
 ```
 
+### get_user_model() Provides Flexibility
+There are two ways to reference custom user model.
+1. `CustomUser` directly. If the AUTH_USER_MODEL setting has been changed to `ChangeUser`, you have to change all the `CustomUser` to `ChangeUser`.
+2. `get_user_model()`
+`get_user_model()` returns the currently active user model.
+
+
 ### Do you want to use TokenAuthentication?
-To use `TokenAuthentication`, You need to create a token for each user. You don't need to create a Token model manually; it's provided by DRF. 
+To use `TokenAuthentication`, You need to create a token for each user. You don't need to create a Token model manually; it's provided by DRF.
 ```python
 from rest_framework.authtoken.models import Token
 ```
@@ -35,20 +42,20 @@ def create_auth_token(sender, instance=None, created=False, **kwargs):
         Token.objects.create(user=instance)
 ```
 
-In `serializers.py`:   
+In `serializers.py`:
 Put it in the class where you'll use.
 Create a token when a new user is created.
 ```python
     def save(self, **kwargs):
-        newuser = User.objects.create_user(self.validated_data['username'], 
-                                        self.validated_data['email'], 
+        newuser = User.objects.create_user(self.validated_data['username'],
+                                        self.validated_data['email'],
                                         self.validated_data['password'])
         newuser.save()
         token = Token.objects.create(user=newuser)
 ```
 
-And Handling Token Creation in `views.py`    
-Remember that create function will be only once. 
+And Handling Token Creation in `views.py`
+Remember that create function will be only once.
 If there are more than one, will return IntegrityError.
 And you don't need to create new token after signup.
 
@@ -90,7 +97,7 @@ else:
 If you want to get the data from 'request' you can get through parameter. I naming request to 'data'.
 ```python
 def validate(self, data):
-    user = authenticate(username=data['username'], 
+    user = authenticate(username=data['username'],
                         password=data['password'])
 ```
 Then, How can you get the data from client's input?
@@ -100,15 +107,15 @@ You can retrieve the user's input from 'request.data' in your views.
 class LoginView(generics.ListCreateAPIView):
     serializer_class = LoginSerializer
     queryset = User.objects.all()
-    
+
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
 ```
 
 # permission
-You can set permissions for each methods in your views.  
+You can set permissions for each methods in your views.
 
-Below are examples of how to set permissions   
+Below are examples of how to set permissions
 using FBV and CBV.
 1. If you just need only one permission you can set like this.
 
@@ -118,7 +125,7 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 
 @api_view(["POST"])
 @permission_classes([AllowAny])
-def signup(request): 
+def signup(request):
     ...
 ```
 
@@ -131,7 +138,7 @@ class LoginView(APIView):
     permission_classes = [AllowAny]
 ```
 
-2. You can use 'get_permissions()' method.   
+2. You can use 'get_permissions()' method.
 (If you need permissions each methods)
 ```python
 class SignupView(APIView):
@@ -155,7 +162,7 @@ class IsAuthorOrReadOnly(permissions.BasePermission):
 obj is from Database. if "database's user information" is "client's user information" then return True. Then we can use API.
 
 # FBV and CBVs
-I tried various ways to create API. 
+I tried various ways to create API.
 
 ## signup API
 ### FBV
@@ -205,7 +212,7 @@ class SignupView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = [AllowAny]
-    
+
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -232,10 +239,10 @@ class UserViewSet(viewsets.ViewSet):
         if self.action in ['signup', 'login', '']:
             return [AllowAny()]
         return [IsAuthenticated()]
-    
+
     def get_queryset(self):
         return User.objects.all()
-    
+
     def create(self, request, *args, **kwargs):
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
@@ -276,7 +283,7 @@ def login(request):
 class LoginAPIView(APIView):
     def post(self, request, format=None):
         serializer = LoginSerializer(data=request.data)
-        
+
         if serializer.is_valid():
             user = serializer.validated_data
             token = Token.objects.get(user=user)
@@ -295,7 +302,7 @@ class LoginView(generics.ListCreateAPIView):
     serializer_class = LoginSerializer
     queryset = User.objects.all()
     permission_classes = [AllowAny]
-    
+
     def post(self, request, *args, **kwargs):
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -306,9 +313,9 @@ class LoginView(generics.ListCreateAPIView):
             user_serializer = UserSerializer(user)
             data = {
                 'user': user_serializer.data,
-            } 
+            }
         if token:
-            data['token'] = token.key 
+            data['token'] = token.key
         return Response(data)
 ```
 
@@ -326,16 +333,16 @@ curl -X GET http://localhost:8000/api/accounts/ \
      -H "Authorization: Token c5e1d6e9f5ac3f5477bdb39b812f40d921217096"
 ```
 
-request.data: {}    
-request.user: testuser    
-request.headers: {'Cookie': '', 'Content-Type': 'application/octet-stream', 'Authorization': 'Token 4fa1d50238c3ac20e730d21caa015ae4a7f182db'}    
-request.auth: 4fa1d50238c3ac20e730d21caa015ae4a7f182db    
+request.data: {}
+request.user: testuser
+request.headers: {'Cookie': '', 'Content-Type': 'application/octet-stream', 'Authorization': 'Token 4fa1d50238c3ac20e730d21caa015ae4a7f182db'}
+request.auth: 4fa1d50238c3ac20e730d21caa015ae4a7f182db
 
 # How `request.user` works with Token
 1. The clident includes the token in the request header
 2. DRF uses the 'TokenAuthentication' class to validate this token of the header.
 3. If the token is valid, the corresponding user is identified.
 
-4. When a valid token is provided, 'request.user' represents the user instance associated with that token. 
+4. When a valid token is provided, 'request.user' represents the user instance associated with that token.
 
 
