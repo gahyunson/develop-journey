@@ -5,7 +5,7 @@ def post(self, request, *args, **kwargs):
     print(self.__dict__ )
 ```
 
-```json
+```
 {
   'head': <boundmethodPhotoDetailView.getof<photos.views.PhotoDetailViewobjectat0x109204760>>,
   'request': <rest_framework.request.Request: POST'/api/photos/2/'>,
