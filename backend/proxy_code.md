@@ -5,6 +5,23 @@
 5. Create run.sh on proxy folder
 
 
+# Add uWSGI to project
+configure dockerfile
+
+Proxy folder
+1. default.conf.tpl
+2. uwsgi_params
+3. run.sh
+4. Dockerfile
+
+docker compose -f docker-compose-deploy.yml down
+docker compose -f docker-compose-deploy.yml up
+---
+
+1. Create AWS account and user
+2. Login to console
+3. Create new virtual server
+
 ---
 ### Add uWSGI
 1. Dockerfile
