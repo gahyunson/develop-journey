@@ -43,6 +43,7 @@ ENV PATH="/scripts:/py/bin:$PATH"
 
 CMD ["run.sh"]
 ```
+wsgi Python package requires Linux headers installed.
 
 2. Create run.sh
 on root, /scripts/run.sh
@@ -105,11 +106,12 @@ nginx -g 'daemon off;' # start engine with above
 Until kill the running nginx server, docker container is going to continue to run.
 
 6. Create Dockerfile
+It will run Nginx our project.
 /proxy/Dockerfile
 
 ```dockerfile
-FROM nginxinc/nginx-unprivileged:1-alpine
-LABEL maintainer='gahyunson.com'
+FROM nginxinc/nginx-unprivileged:1-alpine : Base image
+LABEL maintainer='gahyunson.com' : metadata of the image
 
 COPY ./default.conf.tpl /etc/nginx/default.conf.tpl
 COPY ./uwsgi_params /etc/nginx/uwsgi_params
@@ -133,3 +135,88 @@ USER nginx
 
 CMD ["/run.sh"]
 ```
+docker build .
+
+
+### Handling configuring such as database password, Django secret
+1. .env
+```
+DB_NAME=dbname
+DB_USER=rootuser
+DB_PASS=changeme
+DJANGO_SECRET_KEY=changeme
+DJANGO_ALLOWED_HOSTS=127.0.0.1
+```
+
+2. docker-compose-deploy.yml
+```
+services:
+  app:
+    build:
+      context: .
+    restart: always
+    volumes:
+      - static-data:/vol/web
+    environment:
+      - DB_HOST=db
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
+      - SECRET_KEY=${DJANGO_SECRET_KEY}
+      - ALLOWED_HOSTS=${DJANGO_ALLOWED_HOSTS}
+    depends_on:
+      - db
+
+  db:
+    image: postgres:13-alpine
+    restart: always
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASS}
+
+  proxy:
+    build:
+      context: ./proxy
+    restart: always
+    depends_on:
+      - app
+    ports:
+      - 80:8000
+    volumes:
+      - static-data:/vol/static
+
+volumes:
+  postgres-data:
+  static-data:
+
+```
+
+3. settings.py
+```python
+SECRET_KEY = os.environ.get('SECRET_KEY', 'changeme')
+
+DEBUG = bool(int(os.environ.get('DEBUG', 0)))
+
+ALLOWED_HOSTS = []
+ALLOWED_HOSTS.extend(
+    filter(
+        None,
+        os.environ.get('ALLOWED_HOSTS', '').split(','),
+    )
+)
+```
+
+4. docker-compose.yml
+```
+services:
+  app:
+    environment:
+      ...
+      - DEBUG=1
+```
+
+5. Test running it locally, just check everything works.
+`docker compose docker-compose -f docker-compose-deploy.yml up`
