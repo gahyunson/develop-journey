@@ -220,3 +220,6 @@ services:
 
 5. Test running it locally, just check everything works.
 `docker compose docker-compose -f docker-compose-deploy.yml up`
+
+Now docker setting was made. You can serve your project on AWS too.
+If you want to know the steps move to `aws_ec2.md`.
