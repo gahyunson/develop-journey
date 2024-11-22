@@ -16,10 +16,9 @@ Runners?
 - A server that runs workflows.
 - Each runner can run a single job at a time.
 
-
 common uses for github actions
 - handle the Deployment
-- handlethe code linting
+- handle the code linting
 - run unit tests
 
  Trigger (e.g. push) -> Job (unit tests) -> Result/Output (Success/fail)
@@ -52,5 +51,5 @@ common uses for github actions
               run:
 
     ```
-3. I can check the GitHub Actions what I added at Actions of GitHub repository.
-There's another actions was added automatically.
+3. git push
+4. Now go to Action of the repository and I can see the workflow what I added.
