@@ -1,16 +1,16 @@
 # forms
 - preparing and restructuring data to make it ready for rendering
 - creating HTML forms for the data
-- receiving and processing submitted forms and data from theclient
+- receiving and processing submitted forms and data from the client
 
 ### HTML forms
 - a collection of elements inside <form>...</form>
-- send the information (input) back to the server 
-- Other complex things ... pops up a date picker or move a slider: HTML forms + 
+- send the information (input) back to the server
+- Other complex things ... pops up a date picker or move a slider: HTML forms +
 *Javascript and CSS*
 
 A form must have two informations
-1. where? 
+1. where?
 The URL to which the data corresponding
 2. how?
 The HTTP method (the data should be returned by)

@@ -1,8 +1,21 @@
 ### GitHub Actions?
-- Automation tool
-- Similar to Travis-CI, GitLab CI/CD, Jenkins
-- Run jobs any time code is changed
-- the jobs automate sudden tasks
+- Automation tool, performs a complex but frequently repeated task.
+- Similar to Travis-CI, GitLab CI/CD (Continuous Integration and Continuous Delivery), Jenkins
+- A workflow == a configurable automated process.
+- Can have multiple workflows.
+- Workflows are defined in the `.github/workflows`
+
+Job?
+- A set of steps in a workflow.
+- You can share data from one step to another if each step is executed on the same runner.
+e.g. A step that builds a application - a step that tests a application that was build.
+- jobs have no dependencies: run in parallel.
+- A job takes a dependency on another job: it waits for the dependents job to complete.
+
+Runners?
+- A server that runs workflows.
+- Each runner can run a single job at a time.
+
 
 common uses for github actions
 - handle the Deployment
