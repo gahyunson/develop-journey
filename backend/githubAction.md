@@ -3,7 +3,7 @@
 - Similar to Travis-CI, GitLab CI/CD (Continuous Integration and Continuous Delivery), Jenkins
 - A workflow == a configurable automated process.
 - Can have multiple workflows.
-- Workflows are defined in the `.github/workflows`
+- Workflows are defined in the `.github/workflows/`
 
 Job?
 - A set of steps in a workflow.

@@ -68,7 +68,7 @@ We want to take all of the values that are passed into the tag.
 ## Design
 ### Seperate serializers
 We don't need to define all things in a single serializer.
-Let's create separate serializers! Then, why we creating a separate serializers is better?
+Let's create separate serializers! Then, I wonder the reason that creating a separate serializers is better.
 It is because when we upload data, we don't need any other values that aren't relevant to the upload process.
 We separate APIs and the best practice is to only upload one type of data to an API.
 

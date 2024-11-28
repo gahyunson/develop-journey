@@ -35,15 +35,15 @@
     ```
     # version: "3.9"
     services:
-    app:
-        build:
-            context: .
-        ports:
-            - "8000:8000"
-        volumes:
-            - ./app:/app
-        command: >
-            sh -c "python manage.py runserver 0.0.0.0:8000"
+        app:
+            build:
+                context: .
+            ports:
+                - "8000:8000"
+            volumes:
+                - ./app:/app
+            command: >
+                sh -c "python manage.py runserver 0.0.0.0:8000"
     ```
 - flake8 install - requirements.dev.txt
     ```
@@ -54,10 +54,12 @@
     COPY ./requirements.dev.txt /tmp/requirements.dev.txt
 
     RUN ...
-    if [ $DEV = "true" ]; \
-        then /py/bin/pip install -r /tmp/requirements.dev.txt; \
-    fi && \
-    rm -rf /tmp && \
+        if [ $DEV = "true" ]; \
+            then /py/bin/pip install -r /tmp/requirements.dev.txt; \
+        fi && \
+        rm -rf /tmp && \
+        adduser \
+            ...
     ```
 - Add code to docker-compose.yml
     ```

@@ -36,7 +36,7 @@ To add the method on the field when the models are already saved to the database
 >>> entry.authors.add(john, paul, george, ringo)
 ```
 
-Retrieving objects - Managers   
+Retrieving objects - Managers
 A Manager is the interface through which database query operations are provied to Django models.
 Managers are accessible only via model classes.
 
@@ -46,8 +46,8 @@ entry = Entry.objects.all()
 ```
 
 Retrieving specific objects with filters
-`get()` Returns only one object. 
-`filter()` Returns objects that match the given lookup parameters.
+`get()` Returns only one object not a queryset. It would raise an exception if no object is found.
+`filter()` Returns a queryset that match the given lookup parameters. It returns an empty set if no object is found.
 `exclude()` Returns objects that do not match the given lookup parameters.
 
 The lookup parameters should be in the format described in Field lookups.
@@ -81,7 +81,7 @@ is equal with "Beatles Blog", "beatles blog", or even "BeAtlES blOG".
 ```python
 Entry.objects.get(headline__contains='Lennon')
 ```
-is equal with 
+is equal with
 ```SQL
 SELECT ... WHERE headline LIKE '%Lennon%';
 ```
