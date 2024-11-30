@@ -1,5 +1,7 @@
 EC2 of AWS is a Single VPS.
 
+First, Complete the configurations.
+
 # Set up do deploy
 1. Create AWS account.
 2. Create IAM user that has administrative privileges that you can use in your account.
@@ -49,7 +51,7 @@ EC2 dashboard - Launch instance
 apple@GH-MacBook-Pro .ssh % ssh-add aws_id_rsa
 Enter passphrase for aws_id_rsa:
 Identity added: aws_id_rsa (apple@GH-MacBook-Pro.local)
-apple@GH-MacBook-Pro .ssh % ssh ec2-user@3
+apple@GH-MacBook-Pro .ssh % ssh ec2-user@Public IPv4 address
 The authenticity of host '3 ()' can't be established.
 ED25519 key fingerprint is
 This key is not known by any other names
@@ -69,13 +71,39 @@ Warning: Permanently added '3' () to the list of known hosts.
 ```
     Now we allowed public access from the internet to our SSH server.
 
-8. Public key on our remote server.
+8. Setting up Deploy key
+```bash
+[ec2-user@ip-172-31-16-131 ~]$ ssh-keygen -t ed25519 -b 4096
+Generating public/private ed25519 key pair.
+Enter file in which to save the key (/home/ec2-user/.ssh/id_ed25519):
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in /home/ec2-user/.ssh/id_ed25519
+Your public key has been saved in /home/ec2-user/.ssh/id_ed25519.pub
+...
+The key's randomart image is:
++--[ED25519 256]--+
+|          +=.Bo. |
+|         o.o@oo. |
+|        . Eoo+o .|
+|       . o o... o|
+|      + S +  .. o|
+|     o = o     o |
+|      o + + o . .|
+|       + B o +.= |
+|       .= ..+ ooo|
++----[SHA256]-----+
+```
+
+9. Public key on our remote server.
 Set up a deploy key. we can imporove our server to be able to pull the code from GitHub so that we can deploy to the server.
+It was created on remote server.
 ```bash
 cat ~/.ssh/id_ed25519.pub
 ```
 
 The GitHub repository - settings - Deploy keys - Add new
+Title: server, Key: paste here.
 
 # Set up our server with some of the dependencies
 - `sudo yum install git -y`
@@ -92,24 +120,37 @@ The GitHub repository - settings - Deploy keys - Add new
 - `sudo chmod +x /usr/local/bin/docker-compose`: give the permissions to run command.
 
 # Clone on the remote server
+1. Clone the GitHub respository.
 ```bash
 [ec2-user@ip- ~]$ git clone git@github.com:gahyunson/recipe-app-api.git
 ```
 
-```
+2. Move to the directory on aws terminal.
+```bash
 [ec2-user@ip- ~]$ cd recipe-app-api/
 [ec2-user@ip- recipe-app-api]$ ls
 Dockerfile  app                        docker-compose.yml  requirements.dev.txt  scripts
 README.md   docker-compose-deploy.yml  proxy               requirements.txt
 [ec2-user@ip- recipe-app-api]$ ls -la
+```
 
+If there is no .env.sample, add it and commit to github again,
+pull it on aws server. cp means COPY.
+```bash
 [ec2-user@ip- recipe-app-api]$ git pull origin
 Already up to date.
 [ec2-user@ip- recipe-app-api]$ cp .env.sample .env
 [ec2-user@ip- recipe-app-api]$ vi .env
 ```
 
-Set up the values.
+3. Set up the values.
+```
+DB_NAME=setdbname
+DB_USER=setusername
+DB_PASS=setpassword
+DJANGO_SECRET_KEY=djangosercretkey
+DJANGO_ALLOWED_HOSTS=Public IPv4 DNS
+```
 
 # Run our service
 
@@ -152,14 +193,7 @@ docker-compose -f docker-compose-deploy.yml down
 docker-compose -f docker-compose-deploy.yml logs
 
 ### If you want to connect to aws.
-Log in
-```bash
-apple@GH-MacBook-Pro .ssh % ssh-add aws_id_rsa
-Enter passphrase for aws_id_rsa:
-Identity added: aws_id_rsa (apple@GH-MacBook-Pro.local)
-```
-
-Connect to the server
+Login to the server
 ```bash
 apple@GH-MacBook-Pro .ssh % ssh ec2-user@3.
    ,     #_
