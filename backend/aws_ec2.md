@@ -104,6 +104,7 @@ cat ~/.ssh/id_ed25519.pub
 
 The GitHub repository - settings - Deploy keys - Add new
 Title: server, Key: paste here.
+- ssh ec2-user@3.23532532
 
 # Set up our server with some of the dependencies
 - `sudo yum install git -y`
@@ -113,7 +114,7 @@ Title: server, Key: paste here.
 - `sudo systemctl start docker.service`: start docker service
 - `sudo usermod -aG docker ec2-user`: It gives out easy to user permission to run docker containers.
 - `exit`: exit from remote(aws) server. Log out.
-- `ssh ec2-user@3.23532532`: Log in.
+- `ssh ec2-user@Public IPv4 address`: Log in.
 
 - `sudo curl -L "https://github.com/docker/compose/releases/download/1.29.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose`: Download docker compose to our system.
 
@@ -165,7 +166,7 @@ Complete!
 ```
 
 ```bash
-[ec2-user@ip-172-31-16-131 recipe-app-api]$ docker-compose -f docker-compose-deploy.yml up -d
+docker-compose -f docker-compose-deploy.yml up -d
 ```
 
 # Stop the server
@@ -176,17 +177,17 @@ docker-compose -f docker-compose-deploy.yml down
 # Upload file to remote server
 1. Move to the repository folder and pull from github.
 ```bash
-[ec2-user@ip- recipe-app-api]$ git pull origin
+git pull origin
 ```
 
 2. Rebuild including any other change.
 ```bash
-[ec2-user@ip- recipe-app-api]$ docker-compose -f docker-compose-deploy.yml build app
+docker-compose -f docker-compose-deploy.yml build app
 ```
 
 3. Recreate our server, Restart out app but no dependencies. We already ran dependencies so we don't need to re-run.
 ```bash
-[ec2-user@ip- recipe-app-api]$ docker-compose -f docker-compose-deploy.yml up --no-deps -d app
+docker-compose -f docker-compose-deploy.yml up --no-deps -d app
 ```
 
 ### If you want to see logs
@@ -195,7 +196,7 @@ docker-compose -f docker-compose-deploy.yml logs
 ### If you want to connect to aws.
 Login to the server
 ```bash
-apple@GH-MacBook-Pro .ssh % ssh ec2-user@3.
+apple@GH-MacBook-Pro .ssh % ssh ec2-user@Public IPv4 address
    ,     #_
    ~\_  ####_        Amazon Linux 2023
   ~~  \_#####\
